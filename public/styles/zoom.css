@@ -22,12 +22,17 @@ main img {
   max-width: 100%;
 }
 
-/* Medium Zoom overlay styling */
+/* Medium Zoom overlay styling.
+   Both sit above every z-index the site itself uses (the highest is the
+   tooltip at 60), so the overlay always receives the click that dismisses a
+   zoom rather than the sticky header or a side panel underneath it. */
 .medium-zoom-overlay {
   z-index: 999;
   background: var(--zoom-overlay-bg) !important;
+  cursor: zoom-out;
 }
 
 .medium-zoom-image--opened {
   z-index: 1000;
+  cursor: zoom-out;
 }

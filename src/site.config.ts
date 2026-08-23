@@ -7,10 +7,10 @@ import type {
 } from "@/types"
 
 export const SITE: SiteConfig = {
-  title: "Astro Scholar",
+  title: "My Scholar",
   description:
     "Research in computational social science, open methods, and responsible computing.",
-  href: "https://astro-scholar.pages.dev",
+  href: "https://myscholar.pages.dev",
   author: "Alex Morgan",
   dir: "ltr",
   defaultPageImage: "/img/social-preview.png",
@@ -26,10 +26,12 @@ export const SITE: SiteConfig = {
     },
   },
 
+  // Table of contents depth shared by blog posts and project detail pages.
+  tocMaxDepth: 3,
+
   blog: {
     featuredPostCount: 3,
     postsPerPage: 8,
-    tocMaxDepth: 3,
     shareActions: ["x"],
   },
 
@@ -52,29 +54,26 @@ export const SITE: SiteConfig = {
 export const PROFILE: ProfileConfig = {
   name: SITE.title,
   tagline: "Computational social scientist and open-methods",
-  email: "alex@example.edu",
+  email: "hi@mychiffonn.com",
   location: "Example City",
   pronouns: "they/them",
   links: {
-    github: "https://github.com/mychiffonn/astro-scholar",
+    github: "https://github.com/mychiffonn",
     website: "https://mychiffonn.com/",
   },
-  // where the links above show up. true = that section's default set, false or
-  // [] = none, or list keys in the order you want them. The header renders its
-  // set as bare icons, so it defaults to a handful rather than everything.
+  highlightLinks: ["github"],
   linksPlacement: {
-    header: ["email", "github"],
+    header: ["email", "github", "website"],
     about: false,
-    footer: true,
+    footer: false,
   },
 }
 
 export const NAV_LINKS: LinkConfig[] = [
   { href: "/projects", label: "Projects" },
   { href: "/publications", label: "Publications" },
+  { href: "/teaching", label: "Teaching" },
   { href: "/blog", label: "Blog" },
-  { href: "/uses", label: "Tech" },
-  { href: "/now", label: "Now" },
 ]
 
 export const NAVIGATION: LinkConfig[] = NAV_LINKS.map(({ href, label }) => ({
@@ -100,9 +99,9 @@ export const PUB_CONFIG: PublicationConfig = {
 
 export const FOOTER: FooterConfig = {
   credits: true,
-  sourceCode: "https://github.com/mychiffonn/astro-scholar",
+  sourceCode: "https://github.com/mychiffonn/myscholar",
   sourceContent:
-    "https://github.com/mychiffonn/astro-scholar/tree/main/src/content",
+    "https://github.com/mychiffonn/myscholar/tree/main/src/content",
   footerLinks: [],
 }
 

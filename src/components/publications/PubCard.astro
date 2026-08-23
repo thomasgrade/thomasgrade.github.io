@@ -48,9 +48,9 @@ const hiddenAuthorsId = `publication-${slugify(pub.title)}-${pub.year ?? "unknow
     <CardHeader>
       {pub.award && <span class="publication-award">🏆 {pub.award}</span>}
       {pub.mainUrl ? (
-          <Link href={pub.mainUrl} external class="card-title-link">
-            <CardTitle>{pub.title}</CardTitle>
-          </Link>
+          <CardTitle>
+            <Link href={pub.mainUrl} external underline>{pub.title}</Link>
+          </CardTitle>
         ) : (
           <CardTitle>{pub.title}</CardTitle>
         )}
@@ -227,6 +227,27 @@ const hiddenAuthorsId = `publication-${slugify(pub.title)}-${pub.year ?? "unknow
     color: var(--primary);
     font-size: var(--step--1);
     font-weight: var(--font-weight-bold);
+  }
+
+  /* The animated background underline can resolve an inline heading link's
+     width against the whole line box. Use the native decoration here so the
+     hover stroke follows the title text instead of stretching across the
+     card. Keep the selected-card emphasis on the link itself, since it no
+     longer inherits the heading color reliably across browsers. */
+  .publication-card [data-slot="card-title"] a {
+    --underline-wipe: none;
+    background-image: none;
+    color: var(--foreground);
+    text-decoration-color: transparent;
+  }
+
+  .publication-card[data-pub-selected="true"] [data-slot="card-title"] a {
+    color: var(--primary);
+  }
+
+  .publication-card [data-slot="card-title"] a:is(:hover, :focus-visible) {
+    color: var(--accent);
+    text-decoration-color: currentColor;
   }
 
   .bibliography-authors,

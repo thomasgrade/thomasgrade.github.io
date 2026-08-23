@@ -1,6 +1,6 @@
-# Install Astro Scholar
+# Install My Scholar
 
-Astro Scholar is a source theme for academic portfolios and research blogs. The
+My Scholar is a source theme for academic portfolios and research blogs. The
 recommended setup uses Astro's project wizard with this GitHub repository as the
 template. This keeps installation aligned with Astro instead of duplicating
 framework setup steps here.
@@ -29,7 +29,7 @@ and initialize Git for you. See Astro's
 [theme and starter template instructions][astro-template] for all supported
 template formats and branch selection.
 
-To contribute to Astro Scholar itself, clone this repository instead:
+To contribute to My Scholar itself, clone this repository instead:
 
 ```bash
 git clone https://github.com/mychiffonn/astro-scholar.git
@@ -52,7 +52,7 @@ Open <http://localhost:4321>.
    canonical URLs and the sitemap. See the [`site` configuration reference][site].
 2. Update `SITE`, `PROFILE`, `NAV_LINKS`, `PUB_CONFIG`, and `FOOTER` in
    `src/site.config.ts`.
-3. Replace the example collections in `src/content/`. Astro Scholar uses
+3. Replace the example collections in `src/content/`. My Scholar uses
    [Astro content collections][content-collections] for typed blog, project,
    people, and experience data.
 4. Replace the avatar in `src/assets/` and site files in `public/`.
@@ -62,7 +62,7 @@ Open <http://localhost:4321>.
 ## Astro integrations
 
 The starter already configures the official [`@astrojs/sitemap` integration][sitemap].
-Astro Scholar's RSS feed uses Astro's official [`@astrojs/rss` package][rss].
+My Scholar's RSS feed uses Astro's official [`@astrojs/rss` package][rss].
 Keep `site` accurate so both produce your production URLs.
 
 Use Astro's integration command when you intentionally add an official adapter
@@ -99,7 +99,7 @@ Astro documents these commands in its
 
 ## Deploy
 
-Astro Scholar uses Astro's default static output, so it does not need a server
+My Scholar uses Astro's default static output, so it does not need a server
 adapter on a static host. Follow the official guide for your provider instead of
 copying provider settings from this repository:
 

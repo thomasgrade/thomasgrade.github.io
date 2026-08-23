@@ -318,7 +318,7 @@ function highlightAuthorName(
   const namesToHighlight = [
     `${firstName} ${lastName}`,
     `${lastName}, ${firstName}`,
-    `${firstName.split(" ")[0]} ${lastName}`, // Handle the first given name
+    `${firstName.split(" ")[0]} ${lastName}`, // Handle "My" from "My Chiffon"
     `${lastName}, ${firstName.split(" ")[0]}`,
     ...aliases,
   ]
@@ -419,7 +419,7 @@ function truncateAuthors(
   // Early return if no truncation needed
   if (totalAuthors <= maxFirst || totalAuthors <= maxFirst + maxLast) {
     return {
-      displayFirstAuthors: authors.join(", ") + (totalAuthors > 0 ? "," : ""),
+      displayFirstAuthors: authors.join(", "),
       hasMore: false,
       hiddenCount: 0,
       hiddenAuthors: "",

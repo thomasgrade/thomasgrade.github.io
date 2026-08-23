@@ -1,4 +1,4 @@
-# Customize Astro Scholar
+# Customize My Scholar
 
 Start with content and configuration. Move into CSS, icons, and Markdown
 pipeline changes only after the site builds with your own data.
@@ -8,7 +8,6 @@ pipeline changes only after the site builds with your own data.
 Most site content lives in `src/content/`.
 
 - `src/content/about.md`: about-page prose.
-- `src/content/now.md`: `/now`.
 - `src/content/tech.md`, `src/content/misc.md`, `src/content/services.md`:
   homepage/profile sections.
 - `src/content/blog/`: blog posts and subposts.
@@ -71,7 +70,7 @@ If a dev server or build fails, read the schema error before changing layout cod
 Pages live in `src/pages/`.
 
 - Remove a page by deleting its route file and removing any navigation link.
-- Add a simple content page by following `src/pages/now.astro` or
+- Add a simple content page by following `src/pages/teaching.md` or
   `src/pages/uses.astro`.
 - Add collection-backed pages by following `src/pages/projects/index.astro` and
   `src/pages/projects/[...id].astro`.
@@ -118,7 +117,7 @@ instead of creating one-off visual systems.
 
 ## 7. Change icons
 
-Astro Scholar supports three icon paths:
+My Scholar supports three icon paths:
 
 1. Semantic names in `src/icon.config.ts`, such as `blog`, `research`, or
    `arrow-right`.

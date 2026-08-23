@@ -48,9 +48,11 @@ const relValue = relTokens.length > 0 ? relTokens.join(" ") : undefined
 <style>
   [data-link] {
     color: inherit;
+    cursor: pointer;
     transition:
       color var(--motion-duration-fast) var(--motion-ease),
-      text-decoration-color var(--motion-duration) var(--motion-ease);
+      text-decoration-color var(--motion-duration) var(--motion-ease),
+      background-size var(--motion-duration) var(--motion-ease);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -59,8 +61,11 @@ const relValue = relTokens.length > 0 ? relTokens.join(" ") : undefined
     }
   }
 
+  /* Opting in here keeps underlines off button- and badge-shaped links. A
+     native text decoration wraps cleanly and only needs a color transition. */
   [data-link][data-underline] {
     --underline: var(--muted-foreground);
+    --underline-wipe: currentColor;
     text-decoration-skip-ink: auto;
   }
 

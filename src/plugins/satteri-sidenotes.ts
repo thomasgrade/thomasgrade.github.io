@@ -1,7 +1,7 @@
 import type { Element, ElementContent, RootContent } from "hast"
 import {
   defineHastPlugin,
-  type HastPluginInput,
+  type HastPluginDefinition,
   type HastVisitorContext,
 } from "satteri"
 
@@ -78,7 +78,18 @@ function footnoteKey(value: string): string {
 }
 
 function cloneNode<T extends RootContent>(node: T): T {
-  return structuredClone(node)
+  const clone: Record<string, unknown> = {}
+  for (const key of Object.keys(node)) {
+    if (key.startsWith("_")) continue
+    const value = node[key as keyof T]
+    clone[key] =
+      key === "children" && Array.isArray(value)
+        ? value.map((child) => cloneNode(child as RootContent))
+        : key === "properties" && value && typeof value === "object"
+          ? { ...(value as Record<string, unknown>) }
+          : value
+  }
+  return clone as T
 }
 
 function isGeneratedBackref(node: Element): boolean {
@@ -175,7 +186,7 @@ function makeBackref(
       className: [className],
       ariaLabel: label(counter),
     },
-    children: structuredClone(children),
+    children: children.map((child) => cloneNode(child)),
   }
 }
 
@@ -265,7 +276,7 @@ function rewriteFootnoteChildren(
  */
 export function satteriSidenotes(
   options: SidenoteOptions = {},
-): HastPluginInput[] {
+): HastPluginDefinition[] {
   const {
     rewriteFootnotes = true,
     backrefLabel = "Back to reference {n}",
@@ -279,69 +290,46 @@ export function satteriSidenotes(
   const label = (n: number) => backrefLabel.replace("{n}", String(n))
 
   return [
-    () =>
-      defineHastPlugin({
-        name: "sidenotes-collect-footnotes",
-        element: {
-          filter: ["section"],
-          visit(node, ctx) {
-            if (!hasProperty(node, "dataFootnotes")) return
-            collectDefinitions(node.children, getState(ctx).definitions)
-          },
+    defineHastPlugin({
+      name: "sidenotes-collect-footnotes",
+      element: {
+        filter: ["section"],
+        visit(node, ctx) {
+          if (!hasProperty(node, "dataFootnotes")) return
+          collectDefinitions(node.children, getState(ctx).definitions)
         },
-      }),
-    () =>
-      defineHastPlugin({
-        name: "sidenotes-replace-references",
-        element: {
-          filter: ["sup"],
-          visit(node, ctx) {
-            const link = findFootnoteLink(node.children)
-            if (!link) return
+      },
+    }),
+    defineHastPlugin({
+      name: "sidenotes-replace-references",
+      element: {
+        filter: ["sup"],
+        visit(node, ctx) {
+          const link = findFootnoteLink(node.children)
+          if (!link) return
 
-            const state = getState(ctx)
-            const key = footnoteKey(String(link.properties?.href ?? ""))
-            const content = state.definitions.get(key)
-            if (!content) return
+          const state = getState(ctx)
+          const key = footnoteKey(String(link.properties?.href ?? ""))
+          const content = state.definitions.get(key)
+          if (!content) return
 
-            let reference = state.references.get(key)
-            if (!reference) {
-              reference = {
-                counter: state.references.size + 1,
-                refIds: [],
-              }
-              state.references.set(key, reference)
+          let reference = state.references.get(key)
+          if (!reference) {
+            reference = {
+              counter: state.references.size + 1,
+              refIds: [],
             }
+            state.references.set(key, reference)
+          }
 
-            const occurrence = reference.refIds.length + 1
-            const suffix = occurrence === 1 ? "" : `-${occurrence}`
-            const snId = `sn-${reference.counter}${suffix}`
-            const refId = `snref-${reference.counter}${suffix}`
-            reference.refIds.push(refId)
+          const occurrence = reference.refIds.length + 1
+          const suffix = occurrence === 1 ? "" : `-${occurrence}`
+          const snId = `sn-${reference.counter}${suffix}`
+          const refId = `snref-${reference.counter}${suffix}`
+          reference.refIds.push(refId)
 
-            const parent = ctx.parent(node)
-            if (isInsideHeading(node, parent as RootContent | undefined)) {
-              ctx.replaceNode(node, {
-                type: "element",
-                tagName: "span",
-                properties: { className: ["sidenote-wrapper"] },
-                children: [
-                  {
-                    type: "element",
-                    tagName: "span",
-                    properties: {
-                      id: refId,
-                      className: ["sidenote-toggle", "sidenote-number"],
-                    },
-                    children: [
-                      { type: "text", value: String(reference.counter) },
-                    ],
-                  },
-                ],
-              })
-              return
-            }
-
+          const parent = ctx.parent(node)
+          if (isInsideHeading(node, parent as RootContent | undefined)) {
             ctx.replaceNode(node, {
               type: "element",
               tagName: "span",
@@ -349,9 +337,8 @@ export function satteriSidenotes(
               children: [
                 {
                   type: "element",
-                  tagName: "label",
+                  tagName: "span",
                   properties: {
-                    htmlFor: snId,
                     id: refId,
                     className: ["sidenote-toggle", "sidenote-number"],
                   },
@@ -359,60 +346,79 @@ export function satteriSidenotes(
                     { type: "text", value: String(reference.counter) },
                   ],
                 },
-                {
-                  type: "element",
-                  tagName: "input",
-                  properties: {
-                    type: "checkbox",
-                    id: snId,
-                    className: ["sidenote-toggle-checkbox"],
-                  },
-                  children: [],
-                },
-                {
-                  type: "element",
-                  tagName: "span",
-                  properties: {
-                    className: ["sidenote"],
-                    id: `sn-note-${reference.counter}${suffix}`,
-                    dataSidenoteNumber: String(reference.counter),
-                  },
-                  children: [
-                    ...(structuredClone(content) as ElementContent[]),
-                    makeBackref(
-                      reference.counter,
-                      refId,
-                      "sidenote-backref",
-                      label,
-                      backrefChildren,
-                    ),
-                  ],
-                },
               ],
             })
-          },
+            return
+          }
+
+          ctx.replaceNode(node, {
+            type: "element",
+            tagName: "span",
+            properties: { className: ["sidenote-wrapper"] },
+            children: [
+              {
+                type: "element",
+                tagName: "label",
+                properties: {
+                  htmlFor: [snId],
+                  id: refId,
+                  className: ["sidenote-toggle", "sidenote-number"],
+                },
+                children: [{ type: "text", value: String(reference.counter) }],
+              },
+              {
+                type: "element",
+                tagName: "input",
+                properties: {
+                  type: "checkbox",
+                  id: snId,
+                  className: ["sidenote-toggle-checkbox"],
+                },
+                children: [],
+              },
+              {
+                type: "element",
+                tagName: "span",
+                properties: {
+                  className: ["sidenote"],
+                  id: `sn-note-${reference.counter}${suffix}`,
+                  dataSidenoteNumber: String(reference.counter),
+                },
+                children: [
+                  ...content.map((child) => cloneNode(child) as ElementContent),
+                  makeBackref(
+                    reference.counter,
+                    refId,
+                    "sidenote-backref",
+                    label,
+                    backrefChildren,
+                  ),
+                ],
+              },
+            ],
+          })
         },
-      }),
-    () =>
-      defineHastPlugin({
-        name: "sidenotes-rewrite-footnote-list",
-        element: {
-          filter: ["section"],
-          visit(node, ctx) {
-            if (!hasProperty(node, "dataFootnotes")) return
-            ctx.setProperty(
-              node,
-              "children",
-              rewriteFootnoteChildren(
-                node.children,
-                getState(ctx),
-                rewriteFootnotes,
-                backrefChildren,
-                label,
-              ),
-            )
-          },
+      },
+    }),
+    defineHastPlugin({
+      name: "sidenotes-rewrite-footnote-list",
+      element: {
+        filter: ["section"],
+        visit(node, ctx) {
+          if (!hasProperty(node, "dataFootnotes")) return
+          ctx.setProperty(
+            node,
+            "children",
+            rewriteFootnoteChildren(
+              node.children,
+              getState(ctx),
+              rewriteFootnotes,
+              backrefChildren,
+              label,
+            ),
+          )
         },
-      }),
+      },
+    }),
   ]
 }

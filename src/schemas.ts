@@ -46,14 +46,15 @@ export const SiteConfigSchema = z.object({
       .default({}),
   }),
 
+  /** Table of contents max depth shared by blog posts and project pages. */
+  tocMaxDepth: z.number().min(1).max(6).default(3),
+
   /** Blog-specific settings */
   blog: z.object({
     /** Number of featured posts on home page. Set to 0 to hide the section. */
     featuredPostCount: z.number().int().nonnegative().default(3),
     /** Number of posts per pagination page. Default is 8. */
     postsPerPage: z.number().positive().default(8),
-    /** TOC max depth of markdown headings, between 1 and 6 */
-    tocMaxDepth: z.number().min(1).max(6).default(3),
     /** Share action buttons on blog posts */
     shareActions: z
       .array(
@@ -185,17 +186,15 @@ export const ProfileConfigSchema = z.object({
     .optional(),
   /** Preferred pronouns (e.g., "she/her", "they/them") */
   pronouns: z.string().max(20).optional(),
-  /** Written pronunciation guide, e.g. a respelling like "shi-FON" */
+  /** Written pronunciation guide for your name */
   pronunciation: z.string().optional(),
-  /**
-   * Optional recording of the name, served from /public.
-   * `pronunciation` stays required alongside it: a recording on its own has
-   * no text alternative, which WCAG 1.2.1 requires for audio-only content.
-   */
+  /** Optional pronunciation recording with a written alternative above. */
   pronunciationAudioPath: z.string().optional(),
   /** Social media and professional platform links */
   links: ProfileLinkConfigSchema,
-  /** Where profile links appear across the site */
+  /** Link keys (e.g., "cv", "resume") to highlight with primary color in profile */
+  highlightLinks: z.array(z.string()).optional().default([]),
+  /** Where profile links appear across the site. */
   linksPlacement: ProfileLinkPlacementConfigSchema,
 })
 

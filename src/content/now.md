@@ -1,3 +1,0 @@
-- Writing a practical guide to transparent dataset documentation.
-- Preparing the next Responsible Computing workshop.
-- Improving the reproducibility checks used across sample projects.

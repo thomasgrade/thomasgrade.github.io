@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Astro Scholar. This project is both a personal-site
+Thanks for helping improve My Scholar. This project is both a personal-site
 codebase and a theme template, so changes should keep the theme reusable for
 other researchers, students, and builders.
 

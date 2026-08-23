@@ -1,6 +1,6 @@
 # Development
 
-Astro Scholar is based on Astro Erudite v2 and keeps the same core direction:
+My Scholar is based on Astro Erudite v2 and keeps the same core direction:
 ship a fast, owned, Markdown-first static site with minimal client JavaScript and
 plain CSS that is easy to inspect.
 
@@ -14,19 +14,11 @@ plain CSS that is easy to inspect.
 - Keep content schema-first. Validate author, project, blog, publication, and
   profile data with Zod instead of allowing loosely shaped content.
 - Keep Markdown portable. Prefer `.md`, Sätteri plugins, directives, callouts,
-  math, and code transforms over MDX-only content.
+  math, and code transforms over MDX-only content. Sätteri Markdown pipeline for callouts, links, headings, math, and code
 - Keep pages dense but readable. This is an academic/research site, not a
   marketing landing page.
 - Preserve static output. Avoid client-side state unless the interaction clearly
   needs it.
-
-The Erudite v2 article emphasizes measurable reductions in JavaScript, CSS,
-build time, dependencies, and main-thread work; removal of Tailwind, React UI
-dependencies, and MDX by default; native CSS tokens; local SVG ownership; and a
-Sätteri Markdown pipeline for callouts, links, headings, math, and code. Use
-those as the baseline when deciding whether a feature belongs in the theme.
-
-Reference: <https://astro-erudite.vercel.app/blog/introducing-v2>
 
 ## Project map
 
@@ -104,50 +96,3 @@ docs.
   theme.
 - Add Iconify sets only when they replace many local one-off assets or unlock a
   coherent icon family.
-
-## Theme publishing checklist
-
-Minimum local project pieces:
-
-- `README.md` with demo image, features, install, customization, and deploy
-  links.
-- `docs/INSTALL.md` and `docs/CUSTOMIZATION.md`.
-- `DEVELOPMENT.md` and `CONTRIBUTING.md`.
-- `LICENSE`.
-- Useful package metadata: `description`, `keywords`, `license`, `repository`,
-  `bugs`, and `homepage`.
-- GitHub Actions CI.
-- GitHub issue and pull request templates.
-- One to four 1600×900 preview screenshots under `docs/assets/previews/`.
-
-Minimum GitHub settings:
-
-- Mark the repository as a template.
-- Add topics: `astro`, `astro-theme`, `astro-template`, `academic`, `blog`,
-  `portfolio`, `publications`, `research`.
-- Enable Issues.
-- Protect `main` with CI required before merge.
-- Add a deployed demo URL in the repository sidebar.
-
-Recommended repository split:
-
-- Template repo: clean sample content and docs.
-- Demo repo: deployed fresh copy that proves the template works without personal
-  private content.
-
-Astro theme directory submission:
-
-1. Sign in to the [Astro developer portal](https://portal.astro.build/themes/submit)
-   with GitHub.
-2. Submit the theme name, short description, full description, repository URL,
-   live demo URL, pricing (`Free`), categories (`Portfolio` and `Blog`), and
-   technology (`TypeScript`).
-3. Upload `docs/assets/previews/home.png` as the primary 16:9 image, then add up
-   to three gallery images: `projects.png`, `publications.png`, and `uses.png`.
-4. Confirm that the public repository and live demo work without authentication
-   before submitting for approval. Publish at least one non-draft demo post so
-   the `Blog` category is represented in the live demo.
-
-The Astro catalog renders cards at a 16:9 ratio and supports a primary image plus
-additional gallery images. Re-capture the previews after material visual
-changes; do not submit the tall full-page README captures.
