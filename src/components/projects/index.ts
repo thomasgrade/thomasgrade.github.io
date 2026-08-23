@@ -1,4 +1,3 @@
-export { default as ProjectCard } from "./ProjectCard.astro"
 export { default as ProjectNavigation } from "./ProjectNavigation.astro"
 export { default as ProjectRow } from "./ProjectRow.astro"
 export { default as GithubActivity } from "./GithubActivity.astro"
