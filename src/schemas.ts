@@ -71,7 +71,10 @@ export const SiteConfigSchema = z.object({
       .default(["email", "x"]),
   }),
 
-  /** Home page settings. Every count hides its section when set to 0. */
+  /**
+   * Home page settings. Every count hides its section when set to 0.
+   * The recent-posts section is governed by `blog.featuredPostCount`.
+   */
   home: z.object({
     /** Number of career highlights to show on the home page. Set to 0 to hide. */
     careerHighlightCount: z.number().int().nonnegative().default(5),
@@ -133,13 +136,27 @@ export const ProfileLinkConfigSchema = z
   .optional()
   .default({})
 
-/** Where profile links appear: all, none, or an explicit ordered subset. */
+/**
+ * Which links a given location renders: `true` for every configured link,
+ * `false` for none, or an explicit list of keys rendered in the order given.
+ */
 const ProfileLinkPlacementSchema = z.union([z.boolean(), z.array(z.string())])
 
+/**
+ * Where profile links appear. Individuals typically keep all three; a lab
+ * site might drop the header set and keep only the about and footer blocks.
+ *
+ * Every field is optional — defaults are applied by
+ * `getProfileLinkPlacement`, since the config object is consumed directly at
+ * runtime and only parsed for validation in dev.
+ */
 export const ProfileLinkPlacementConfigSchema = z
   .object({
+    /** Icon-only links in the site header, beside the home link */
     header: ProfileLinkPlacementSchema.optional(),
+    /** Links in the about/profile block on the homepage */
     about: ProfileLinkPlacementSchema.optional(),
+    /** Links in the site footer */
     footer: ProfileLinkPlacementSchema.optional(),
   })
   .optional()

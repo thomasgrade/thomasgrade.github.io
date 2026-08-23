@@ -8,9 +8,6 @@ types:
 skills:
   - Teaching
   - Curriculum design
-tags:
-  - Responsible computing
-  - Education
 ---
 
 Use project entries for teaching, community work, software, or research. The

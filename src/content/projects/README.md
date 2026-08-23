@@ -34,12 +34,8 @@ types:
   - "coursework"
 skills:
   - "R"
-isHighlighted: true
 selected: true
 release: "https://github.com/username/synthetic-control/releases/tag/v1.0.0"
-tags:
-  - "causal inference"
-  - "statistics"
 ---
 ```
 
@@ -57,16 +53,14 @@ tags:
 | `url` | URL | ❌ | Link to live site or demo | Must be a valid URL |
 | `types` | Enum[] | ❌ | Any of: `research`, `product`, `tool`, `open-source`, `coursework` | Describes what the project is; filterable on the projects page |
 | `skills` | String[] | ❌ | Free-form skills and technologies used by the project | Filterable on the projects page; unique values are aggregated into the Tech Stack section |
-| `isHighlighted` | Boolean | ❌ | Whether to feature this project | Defaults to `false` |
-| `selected` | Boolean | ❌ | Whether this project is a substantial/research-relevant selected project | Defaults to `false` |
+| `selected` | Boolean | ❌ | Whether to feature this project | Defaults to `false` |
 | `release` | URL | ❌ | Link to release or deployment | Must be a valid URL |
-| `tags` | String[] | ❌ | Free-form topics, methods, organizations, and keywords | Display-only badges; will be deduplicated |
 
 ## Notes
 
 - `README.md` will be ignored by the content loader
 - To modify the schema, see the `projects` collection in [src/content.config.ts](../../src/content.config.ts)
-- Projects are sorted by `isHighlighted` (true > false) `toDate` (descending), then `fromDate` (descending), then `title` (ascending)
+- Projects are sorted by `selected` (true > false) `toDate` (descending), then `fromDate` (descending), then `title` (ascending)
 - Project cards show `description` if available, otherwise truncated content with a "read more" link
 - External links use the LinkExternal component and include hover effects
 - The entire project card is clickable and navigates to the project detail page
