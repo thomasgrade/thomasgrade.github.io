@@ -1,4 +1,4 @@
-# Astro Scholar Agent Guide
+# My Scholar Agent Guide
 
 This repository is an Astro theme for academic portfolios and research blogs.
 Preserve its static-first, Markdown-first design and keep it reusable beyond the

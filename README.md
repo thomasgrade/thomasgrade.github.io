@@ -1,10 +1,10 @@
-# Astro Scholar
+# My Scholar
 
-[![Version](https://img.shields.io/badge/version-v2.1.0-blue?style=for-the-badge)](https://github.com/mychiffonn/astro-scholar/releases) [![Astro 7](https://img.shields.io/badge/Astro_7-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build) [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Version](https://img.shields.io/badge/version-v2.2.6-blue?style=for-the-badge)](https://github.com/mychiffonn/astro-scholar/releases) [![Astro 7](https://img.shields.io/badge/Astro_7-BC52EE?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build) [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-![Astro Scholar social preview](public/img/social-preview.png)
+![My Scholar social preview](public/img/social-preview.png)
 
-Astro Scholar is an [Astro](https://docs.astro.build/en/concepts/why-astro/)
+My Scholar is an [Astro](https://docs.astro.build/en/concepts/why-astro/)
 theme for academic personal sites, research blogs, projects, publications, and
 now pages. It is a static-first, Markdown-first starter with generic
 demonstration content that researchers can replace with their own work.

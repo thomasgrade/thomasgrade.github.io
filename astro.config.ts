@@ -14,7 +14,7 @@ import { satteriSidenotes } from "./src/plugins/satteri-sidenotes"
 import { normalizeHeadings } from "./src/plugins/satteri-normalize-headings"
 
 export default defineConfig({
-  site: "https://astro-scholar.pages.dev",
+  site: "https://myscholar.pages.dev",
   compressHTML: true,
   trailingSlash: "never",
   output: "static",
@@ -49,10 +49,10 @@ export default defineConfig({
       ],
       hastPlugins: [
         externalLinks,
-        blockExpressiveCode,
+        blockExpressiveCode(),
         ...satteriSidenotes(),
-        headingNamespace,
-        headingAnchors,
+        headingNamespace(),
+        headingAnchors(),
       ],
     }),
   },

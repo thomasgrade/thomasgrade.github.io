@@ -1,4 +1,4 @@
-# Customize Astro Scholar
+# Customize My Scholar
 
 Start with content and configuration. Move into CSS, icons, and Markdown
 pipeline changes only after the site builds with your own data.
@@ -118,7 +118,7 @@ instead of creating one-off visual systems.
 
 ## 7. Change icons
 
-Astro Scholar supports three icon paths:
+My Scholar supports three icon paths:
 
 1. Semantic names in `src/icon.config.ts`, such as `blog`, `research`, or
    `arrow-right`.

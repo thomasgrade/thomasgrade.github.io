@@ -22,10 +22,10 @@ const {
   <section-heading>
     <h2 id={title.toLowerCase()}>{title}</h2>
     {moreLink && (
-      <Link href={moreLink} underline class="section-more">
-        {moreText}
-      </Link>
-    )}
+        <Link href={moreLink} underline class="section-more">
+          {moreText}
+        </Link>
+      )}
   </section-heading>
   <slot />
 </section>
@@ -35,7 +35,7 @@ const {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
-    margin-block-start: var(--space-xl);
+    margin-block-start: var(--space-l);
   }
 
   .section-block[data-spacing="none"] {
@@ -60,6 +60,31 @@ const {
     font-weight: var(--font-weight-medium);
   }
 
+  h2::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0.15em;
+    inset-inline-end: -1.05rem;
+    inline-size: 0.7rem;
+    block-size: 0.7rem;
+    background: var(--celestial-star);
+    clip-path: polygon(
+      50% 0,
+      58% 40%,
+      100% 50%,
+      58% 60%,
+      50% 100%,
+      42% 60%,
+      0 50%,
+      42% 40%
+    );
+    opacity: 0.62;
+    transform: scale(0.82);
+    transition:
+      opacity var(--motion-duration) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
+  }
+
   h2::after {
     content: "";
     position: absolute;
@@ -78,6 +103,12 @@ const {
     inline-size: 3rem;
   }
 
+  .section-block:hover h2::before,
+  section-heading:focus-within h2::before {
+    opacity: 1;
+    transform: scale(1) rotate(10deg);
+  }
+
   .section-more {
     flex-shrink: 0;
     color: var(--muted-foreground);
@@ -87,7 +118,7 @@ const {
 
   @media (width < 40rem) {
     .section-block {
-      margin-block-start: var(--space-l);
+      margin-block-start: var(--space-m);
     }
 
     section-heading {
@@ -96,6 +127,13 @@ const {
 
     .section-more {
       font-size: var(--step--1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h2::before,
+    h2::after {
+      transition-duration: 0.01ms;
     }
   }
 </style>

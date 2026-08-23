@@ -1,7 +1,11 @@
 ---
 import { FOOTER, PROFILE, SITE } from "@site-config"
+import Icon from "@/components/base/Icon.astro"
 import Link from "@/components/base/Link.astro"
 import ProfileLinks from "@/components/profile/ProfileLinks.astro"
+import { getProfileLinkPlacement } from "@/components/profile/helper"
+
+const footerLinks = getProfileLinkPlacement("footer")
 
 const sourceLinks = [
   FOOTER.sourceCode ? { href: FOOTER.sourceCode, label: "Source Code" } : null,
@@ -14,7 +18,7 @@ const sourceLinks = [
 
 <footer>
   <div class="footer-inner">
-    <ProfileLinks links={PROFILE.links} includeRss={true} includeEmail={true} />
+    <ProfileLinks links={PROFILE.links} keys={footerLinks} />
 
     <p>
       &copy; <span id="current-year"></span>
@@ -30,6 +34,13 @@ const sourceLinks = [
           ` All rights reserved.`
         )}
     </p>
+
+    {PROFILE.location && (
+        <p class="footer-location">
+          <Icon name="mingcute:location-line" />
+          <span>{PROFILE.location}</span>
+        </p>
+      )}
 
     {sourceLinks.length > 0 && (
         <p class="footer-small">
@@ -64,6 +75,7 @@ const sourceLinks = [
 
 <style>
   footer {
+    position: relative;
     margin-block-start: var(--space-l);
     padding-block: var(--space-s);
     border-block-start: 1px solid
@@ -80,6 +92,12 @@ const sourceLinks = [
 
   .footer-small {
     font-size: var(--step--1);
+  }
+
+  .footer-location {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xs);
   }
 
   .footer-link {

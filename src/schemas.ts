@@ -46,14 +46,15 @@ export const SiteConfigSchema = z.object({
       .default({}),
   }),
 
+  /** Table of contents max depth shared by blog posts and project pages. */
+  tocMaxDepth: z.number().min(1).max(6).default(3),
+
   /** Blog-specific settings */
   blog: z.object({
-    /** Number of featured posts on home page. Default is 3 */
-    featuredPostCount: z.number().positive().default(3),
+    /** Number of featured posts on home page. Set to 0 to hide the section. */
+    featuredPostCount: z.number().int().nonnegative().default(3),
     /** Number of posts per pagination page. Default is 8. */
     postsPerPage: z.number().positive().default(8),
-    /** TOC max depth of markdown headings, between 1 and 6 */
-    tocMaxDepth: z.number().min(1).max(6).default(3),
     /** Share action buttons on blog posts */
     shareActions: z
       .array(
@@ -70,10 +71,14 @@ export const SiteConfigSchema = z.object({
       .default(["email", "x"]),
   }),
 
-  /** Home page settings */
+  /** Home page settings. Every count hides its section when set to 0. */
   home: z.object({
     /** Number of career highlights to show on the home page. Set to 0 to hide. */
     careerHighlightCount: z.number().int().nonnegative().default(5),
+    /** Number of recent updates to show on the home page. Set to 0 to hide. */
+    updateCount: z.number().int().nonnegative().default(3),
+    /** Number of selected publications to show on the home page. Set to 0 to hide. */
+    publicationCount: z.number().int().nonnegative().default(3),
   }),
 
   // Theme settings
@@ -128,6 +133,17 @@ export const ProfileLinkConfigSchema = z
   .optional()
   .default({})
 
+/** Where profile links appear: all, none, or an explicit ordered subset. */
+const ProfileLinkPlacementSchema = z.union([z.boolean(), z.array(z.string())])
+
+export const ProfileLinkPlacementConfigSchema = z
+  .object({
+    header: ProfileLinkPlacementSchema.optional(),
+    about: ProfileLinkPlacementSchema.optional(),
+    footer: ProfileLinkPlacementSchema.optional(),
+  })
+  .optional()
+
 /**
  * Schema for personal profile configuration including contact info and social links.
  */
@@ -153,13 +169,16 @@ export const ProfileConfigSchema = z.object({
     .optional(),
   /** Preferred pronouns (e.g., "she/her", "they/them") */
   pronouns: z.string().max(20).optional(),
-  /** Phonetic pronunciation guide for your name */
+  /** Written pronunciation guide for your name */
   pronunciation: z.string().optional(),
-  // pronunciationAudioPath: z.string().optional(),
+  /** Optional pronunciation recording with a written alternative above. */
+  pronunciationAudioPath: z.string().optional(),
   /** Social media and professional platform links */
   links: ProfileLinkConfigSchema,
   /** Link keys (e.g., "cv", "resume") to highlight with primary color in profile */
   highlightLinks: z.array(z.string()).optional().default([]),
+  /** Where profile links appear across the site. */
+  linksPlacement: ProfileLinkPlacementConfigSchema,
 })
 
 /**

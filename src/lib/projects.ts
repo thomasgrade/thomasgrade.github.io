@@ -41,23 +41,6 @@ export const getProjectLinks = (
     }))
 }
 
-export function getProjectTypeCounts(projects: Project[]) {
-  const counts = new Map<string, number>()
-  for (const project of projects) {
-    for (const type of project.data.types) {
-      counts.set(type, (counts.get(type) || 0) + 1)
-    }
-  }
-
-  return PROJECT_TYPES.map(({ slug, label }) => ({
-    slug,
-    label,
-    count: counts.get(slug) || 0,
-  }))
-    .filter((c) => c.count > 0)
-    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
-}
-
 export function getProjectSkillCounts(projects: Project[], minimum = 2) {
   const counts = new Map<string, { label: string; count: number }>()
   for (const project of projects) {
@@ -87,8 +70,8 @@ export function getProjectSkillCounts(projects: Project[], minimum = 2) {
 function sortProjects(projects: Project[]): Project[] {
   return projects.sort((a, b) => {
     // First, prioritize highlighted projects
-    if (a.data.isHighlighted && !b.data.isHighlighted) return -1
-    if (!a.data.isHighlighted && b.data.isHighlighted) return 1
+    if (a.data.selected && !b.data.selected) return -1
+    if (!a.data.selected && b.data.selected) return 1
 
     // Then sort by end date (most recent first); ongoing projects rank highest.
     const ongoingSentinel = new Date(8640000000000000)

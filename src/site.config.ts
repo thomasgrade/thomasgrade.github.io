@@ -7,10 +7,10 @@ import type {
 } from "@/types"
 
 export const SITE: SiteConfig = {
-  title: "Astro Scholar",
+  title: "My Scholar",
   description:
     "Research in computational social science, open methods, and responsible computing.",
-  href: "https://astro-scholar.pages.dev",
+  href: "https://myscholar.pages.dev",
   author: "Alex Morgan",
   dir: "ltr",
   defaultPageImage: "/img/social-preview.png",
@@ -26,15 +26,19 @@ export const SITE: SiteConfig = {
     },
   },
 
+  // Table of contents depth shared by blog posts and project detail pages.
+  tocMaxDepth: 3,
+
   blog: {
     featuredPostCount: 3,
     postsPerPage: 8,
-    tocMaxDepth: 3,
     shareActions: ["x"],
   },
 
   home: {
     careerHighlightCount: 4,
+    updateCount: 3,
+    publicationCount: 3,
   },
 
   favicon: "/favicon.ico",
@@ -50,21 +54,26 @@ export const SITE: SiteConfig = {
 export const PROFILE: ProfileConfig = {
   name: SITE.title,
   tagline: "Computational social scientist and open-methods",
-  email: "alex@example.edu",
+  email: "hi@mychiffonn.com",
   location: "Example City",
   pronouns: "they/them",
   links: {
-    github: "https://github.com/mychiffonn/astro-scholar",
+    github: "https://github.com/mychiffonn",
     website: "https://mychiffonn.com/",
   },
   highlightLinks: ["github"],
+  linksPlacement: {
+    header: ["email", "github", "website"],
+    about: false,
+    footer: false,
+  },
 }
 
 export const NAV_LINKS: LinkConfig[] = [
   { href: "/projects", label: "Projects" },
   { href: "/publications", label: "Publications" },
+  { href: "/teaching", label: "Teaching" },
   { href: "/blog", label: "Blog" },
-  { href: "/uses", label: "Tech" },
   { href: "/now", label: "Now" },
 ]
 
@@ -91,9 +100,9 @@ export const PUB_CONFIG: PublicationConfig = {
 
 export const FOOTER: FooterConfig = {
   credits: true,
-  sourceCode: "https://github.com/mychiffonn/astro-scholar",
+  sourceCode: "https://github.com/mychiffonn/myscholar",
   sourceContent:
-    "https://github.com/mychiffonn/astro-scholar/tree/main/src/content",
+    "https://github.com/mychiffonn/myscholar/tree/main/src/content",
   footerLinks: [],
 }
 
