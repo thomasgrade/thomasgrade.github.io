@@ -74,7 +74,6 @@ export const NAV_LINKS: LinkConfig[] = [
   { href: "/publications", label: "Publications" },
   { href: "/teaching", label: "Teaching" },
   { href: "/blog", label: "Blog" },
-  { href: "/now", label: "Now" },
 ]
 
 export const NAVIGATION: LinkConfig[] = NAV_LINKS.map(({ href, label }) => ({
