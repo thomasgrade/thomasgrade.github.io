@@ -54,12 +54,12 @@ export const SITE: SiteConfig = {
 export const PROFILE: ProfileConfig = {
   name: SITE.title,
   tagline: "Computational social scientist and open-methods",
-  email: "hi@mychiffonn.com",
+  email: "thomasgrade@qq.com",
   location: "Example City",
   pronouns: "they/them",
   links: {
-    github: "https://github.com/mychiffonn",
-    website: "https://mychiffonn.com/",
+    github: "https://github.com/thomasgrade",
+    website: "https://thomasgrade.github.io/",
   },
   highlightLinks: ["github"],
   linksPlacement: {
@@ -99,9 +99,9 @@ export const PUB_CONFIG: PublicationConfig = {
 
 export const FOOTER: FooterConfig = {
   credits: true,
-  sourceCode: "https://github.com/mychiffonn/myscholar",
+  sourceCode: "https://github.com/thomasgrade/thomasgrade.github.io",
   sourceContent:
-    "https://github.com/mychiffonn/myscholar/tree/main/src/content",
+    "https://github.com/thomasgrade/thomasgrade.github.io/tree/main/src/content",
   footerLinks: [],
 }
 
